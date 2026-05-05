@@ -113,6 +113,13 @@
 
     function showFavPicStage() {
       const favPicEl = document.getElementById('fav-pic-stage');
+      const imgEl = favPicEl.querySelector('.fav-pic-img');
+      
+      // Update image source from content.js
+      if (imgEl && CONTENT.favPic) {
+        imgEl.src = CONTENT.favPic;
+      }
+      
       favPicEl.classList.add('active');
 
       // Show for 4 seconds, then transition to main
@@ -148,23 +155,22 @@
         return;
       }
 
-      CONTENT.gallery.forEach(({ file, caption }) => {
+      CONTENT.gallery.forEach(({ src, caption }) => {
         const item = document.createElement('div');
         item.className = 'gallery-item';
 
-        const isVideo = file.toLowerCase().endsWith('.mp4') || file.toLowerCase().endsWith('.webm');
-        const path = isVideo ? `assets/videos/${file}` : `assets/images/${file}`;
+        const isVideo = src.toLowerCase().endsWith('.mp4') || src.toLowerCase().endsWith('.webm');
 
         if (!isVideo) {
           const img = document.createElement('img');
-          img.src = path;
+          img.src = src;
           img.alt = caption;
           img.loading = 'lazy';
           img.onerror = () => showPlaceholder(item);
           item.appendChild(img);
         } else {
           const vid = document.createElement('video');
-          vid.src = path;
+          vid.src = src;
           vid.muted = true;
           vid.loop = true;
           vid.playsInline = true;

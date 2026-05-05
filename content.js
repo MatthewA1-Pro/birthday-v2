@@ -1,5 +1,5 @@
 // ============================================================
-//  BIRTHDAY PORTAL — FINAL MASTER CONTENT
+//  BIRTHDAY PORTAL — FINAL MASTER CONTENT (FLEXIBLE VERSION)
 // ============================================================
 
 const CONTENT = {
@@ -8,8 +8,12 @@ const CONTENT = {
   altName: "Oluwadamilola",
   birthday: "may 11",
 
+  // ── FAVORITE PICTURE FIX ──────────────────────────────────
+  // Change this to the EXACT filename you saved in assets/images/
+  // Example: "assets/images/my_photo.jpg"
+  favPic: "assets/images/kiara.png",
+
   // ── Typewriter Messages ────────────────────────────────────
-  // Split into a long, emotional story flow.
   messages: [
     "Happy Birthday heart beat ❤️",
     "I don’t even know where to start because there’s so much I want to say to you today...",
@@ -42,16 +46,18 @@ const CONTENT = {
     "I love you mama. Enjoy your day and good luck with your exams tomorrow... make mum proud 🥹💋"
   ],
 
-  // ── DYNAMIC GALLERY ────────────────────────────────────────
+  // ── SUPER FLEXIBLE GALLERY ────────────────────────────────
+  // You can now use the full path to any image or video!
+  // It doesn't matter what you name the file.
   gallery: [
-    { file: "kiara.png", caption: "My favorite picture of you. ❤️" },
-    { file: "1.jpg",     caption: "I felt so special when I got this from you" },
-    { file: "2.jpg",     caption: "You a baddie for real 🔥" },
-    { file: "3.jpg",     caption: "Every moment with you is priceless 🥹" },
-    { file: "4.jpg",     caption: "Cute right? 🌚" },
-    { file: "5.jpg",     caption: "😫😫" },
-    { file: "6.mp4",     caption: "I don’t think I can go two days without watching this 😂😂" },
-    { file: "7.jpg",     caption: "I love this picture of you 😭🥹😂" }
+    { src: "assets/images/kiara.png", caption: "My favorite picture of you. ❤️" },
+    { src: "assets/images/1.jpg",     caption: "I felt so special when I got this from you" },
+    { src: "assets/images/2.jpg",     caption: "You a baddie for real 🔥" },
+    { src: "assets/images/3.jpg",     caption: "Every moment with you is priceless 🥹" },
+    { src: "assets/images/4.jpg",     caption: "Cute right? 🌚" },
+    { src: "assets/images/5.jpg",     caption: "😫😫" },
+    { src: "assets/videos/6.mp4",     caption: "I don’t think I can go two days without watching this 😂😂" },
+    { src: "assets/images/7.jpg",     caption: "I love this picture of you 😭🥹😂" }
   ],
 
   timeline: [
