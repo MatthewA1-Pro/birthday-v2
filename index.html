@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>A Gift For You ✨</title>
+  <meta name="description" content="A private, cinematic birthday experience crafted just for you." />
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Preconnect for Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       CANVAS BACKGROUNDS
+  ════════════════════════════════════════════════════════════════ -->
+  <canvas id="star-canvas" aria-hidden="true"></canvas>
+  <div class="bg-ambient" aria-hidden="true"></div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       LAYER 1 — ACCESS GATE
+  ════════════════════════════════════════════════════════════════ -->
+  <div id="gate" class="page-layer" role="main" aria-label="Access Portal">
+
+    <div class="gate-card">
+
+      <!-- Icon -->
+      <div class="gate-icon" aria-hidden="true">
+        <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="26" cy="26" r="25" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.4"/>
+          <path d="M26 10c-5.523 0-10 4.477-10 10v2H14a2 2 0 00-2 2v14a2 2 0 002 2h24a2 2 0 002-2V24a2 2 0 00-2-2h-2v-2c0-5.523-4.477-10-10-10zm0 4a6 6 0 016 6v2H20v-2a6 6 0 016-6zm0 14a3 3 0 110 6 3 3 0 010-6z"
+                fill="url(#gGate)" opacity="0.9"/>
+          <defs>
+            <linearGradient id="gGate" x1="14" y1="10" x2="38" y2="40" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#93c5fd"/>
+              <stop offset="1" stop-color="#c9a96e"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+
+      <h1 class="gate-title">Private Portal</h1>
+      <p class="gate-sub">Enter your details to unlock this experience</p>
+
+      <!-- Access Code -->
+      <div class="field">
+        <label for="access-code">Access Code</label>
+        <input
+          id="access-code"
+          type="text"
+          placeholder="Enter the secret code…"
+          autocomplete="off"
+          spellcheck="false"
+          aria-describedby="error-msg"
+        />
+      </div>
+
+      <!-- Birthday -->
+      <div class="field">
+        <label for="bday">Your Birthday</label>
+        <input
+          id="bday"
+          type="date"
+          aria-describedby="error-msg"
+        />
+      </div>
+
+      <!-- Error -->
+      <p id="error-msg" class="error-msg" role="alert" aria-live="polite"></p>
+
+      <!-- Submit -->
+      <button id="btn-enter" class="btn-submit" type="button">
+        Unlock the Experience
+      </button>
+
+    </div><!-- /gate-card -->
+
+  </div><!-- /gate -->
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       LAYER 2 — CINEMATIC LOADER
+  ════════════════════════════════════════════════════════════════ -->
+  <div id="loader" class="page-layer" aria-label="Loading" aria-live="polite">
+    <canvas id="loader-canvas" style="position:absolute;inset:0;width:100%;height:100%;" aria-hidden="true"></canvas>
+
+    <div class="loader-content">
+      <div class="loader-greeting" id="loader-greeting"></div>
+      <div class="loader-sub">Preparing your experience…</div>
+      <div class="loader-bar-wrap" aria-hidden="true">
+        <div class="loader-bar"></div>
+      </div>
+    </div>
+  </div><!-- /loader -->
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       LAYER 3 — MAIN EXPERIENCE
+  ════════════════════════════════════════════════════════════════ -->
+  <div id="main" aria-label="Birthday Experience">
+
+    <!-- ── HERO / MESSAGE ─────────────────────────────────────── -->
+    <section id="sec-message" class="section" aria-label="Birthday Message">
+
+      <div class="hero-badge" aria-hidden="true">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
+          <path d="M6 0l1.5 4.5H12L8.25 7.27 9.75 12 6 9.23 2.25 12l1.5-4.73L0 4.5h4.5z"/>
+        </svg>
+        A Special Day
+      </div>
+
+      <h2 class="hero-name" id="hero-name"><!-- filled by JS --></h2>
+
+      <!-- Typewriter -->
+      <div class="typewriter-box" aria-live="polite">
+        <span id="typewriter-text"></span><span class="cursor" aria-hidden="true"></span>
+      </div>
+
+      <!-- Scroll hint -->
+      <div class="scroll-hint" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 5v14M5 12l7 7 7-7"/>
+        </svg>
+        <span>Scroll</span>
+      </div>
+
+    </section><!-- /sec-message -->
+
+
+    <!-- ── GALLERY ────────────────────────────────────────────── -->
+    <section id="sec-gallery" class="section" aria-label="Memory Gallery">
+
+      <div class="sec-divider">
+        <div class="sec-divider-line"></div>
+        <h2 class="sec-heading">Our Memories</h2>
+        <div class="sec-divider-line"></div>
+      </div>
+
+      <div id="gallery-grid" class="gallery-grid" role="list">
+        <!-- Populated by app.js -->
+      </div>
+
+    </section><!-- /sec-gallery -->
+
+
+    <!-- ── TIMELINE ───────────────────────────────────────────── -->
+    <section id="sec-timeline" class="section" aria-label="Memory Timeline">
+
+      <div class="sec-divider">
+        <div class="sec-divider-line"></div>
+        <h2 class="sec-heading">Our Story</h2>
+        <div class="sec-divider-line"></div>
+      </div>
+
+      <div id="timeline" class="timeline" role="list">
+        <!-- Populated by app.js -->
+      </div>
+
+    </section><!-- /sec-timeline -->
+
+
+    <!-- ── FOOTER ─────────────────────────────────────────────── -->
+    <footer>
+      <p>Made with love &nbsp;·&nbsp; Just for you ✨</p>
+    </footer>
+
+  </div><!-- /main -->
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       LIGHTBOX
+  ════════════════════════════════════════════════════════════════ -->
+  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Media viewer">
+    <div id="lightbox-inner" class="lightbox-inner">
+      <!-- media injected by JS -->
+    </div>
+    <button id="lightbox-close" class="lightbox-close" aria-label="Close lightbox">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+        <line x1="1" y1="1" x2="13" y2="13"/><line x1="13" y1="1" x2="1" y2="13"/>
+      </svg>
+    </button>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SCRIPTS  (content.js must load before app.js)
+  ════════════════════════════════════════════════════════════════ -->
+  <script src="content.js"></script>
+  <script src="app.js"></script>
+
+  <!-- Inline: set hero name from CONTENT once DOM is ready -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const el = document.getElementById('hero-name');
+      if (el && typeof CONTENT !== 'undefined') {
+        el.textContent = CONTENT.name;
+      }
+    });
+  </script>
+
+</body>
+</html>
