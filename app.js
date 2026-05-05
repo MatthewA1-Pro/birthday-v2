@@ -283,8 +283,8 @@
         if (!deleting) {
           if (charIdx < msg.length) {
             el.textContent = msg.slice(0, ++charIdx);
-            // Sped up slightly per request
-            const variance = 35 + Math.random() * 45;
+            // Blazing fast speed for long paragraphs
+            const variance = 20 + Math.random() * 25;
             setTimeout(tick, msg[charIdx - 1] === ' ' ? variance * 0.7 : variance);
           } else {
             pauseTicks = PAUSE_AFTER_WRITE;
