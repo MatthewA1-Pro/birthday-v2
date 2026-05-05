@@ -1,71 +1,76 @@
 /* ============================================================
-   BIRTHDAY PORTAL — MAIN APP (GOLD STANDARD)
+   BIRTHDAY PORTAL — MAIN APP (HEARTBEAT EDITION)
    ============================================================ */
 
 (() => {
   document.addEventListener('DOMContentLoaded', () => {
 
-    const gateEl       = document.getElementById('gate');
-    const loaderEl     = document.getElementById('loader');
-    const mainEl       = document.getElementById('main');
-    const loaderCanvas = document.getElementById('loader-canvas');
-    const starCanvas   = document.getElementById('star-canvas');
-    const bdayInput    = document.getElementById('bday-answer');
-    const submitBtn    = document.getElementById('btn-enter');
-    const errorMsg     = document.getElementById('error-msg');
-    const gateCard     = document.querySelector('.gate-card');
-    const loaderGreeting = document.querySelector('.loader-greeting');
-    const loaderSub      = document.querySelector('.loader-sub');
-    const loaderBar      = document.querySelector('.loader-bar');
+    const refs = {
+      gate: document.getElementById('gate'),
+      loader: document.getElementById('loader'),
+      main: document.getElementById('main'),
+      loaderCanvas: document.getElementById('loader-canvas'),
+      starCanvas: document.getElementById('star-canvas'),
+      bdayInput: document.getElementById('bday-answer'),
+      submitBtn: document.getElementById('btn-enter'),
+      errorMsg: document.getElementById('error-msg'),
+      gateCard: document.querySelector('.gate-card'),
+      loaderGreeting: document.querySelector('.loader-greeting'),
+      loaderSub: document.querySelector('.loader-sub'),
+      loaderBar: document.querySelector('.loader-bar'),
+      typewriter: document.getElementById('typewriter-text'),
+      readHint: document.getElementById('read-hint'),
+      scrollHint: document.getElementById('main-scroll-hint')
+    };
 
-    initStarCanvas(starCanvas);
-    gateEl.classList.add('active');
+    initStarCanvas(refs.starCanvas);
+    refs.gate.classList.add('active');
 
     function normalize(str) { return str.toLowerCase().replace(/[\s\-_.,!?'"]/g, '').trim(); }
-    function validateBirthday(raw) {
-      const n = normalize(raw);
-      return n.includes("may11") || n === "0511" || n === "1105";
-    }
-
-    submitBtn.addEventListener('click', () => {
-      if (validateBirthday(bdayInput.value)) transitionToLoader();
-      else {
-        errorMsg.textContent = "That doesn't seem to be the right date... try again? ❤️";
-        errorMsg.classList.add('visible');
-        gateCard.classList.add('shake');
-        setTimeout(() => gateCard.classList.remove('shake'), 400);
+    
+    refs.submitBtn.addEventListener('click', () => {
+      const input = refs.bdayInput.value;
+      const normalized = normalize(input);
+      if (normalized.includes("may11") || normalized === "0511" || normalized === "1105") {
+        transitionToLoader();
+      } else {
+        refs.errorMsg.textContent = "That doesn't seem to be the right date... try again? ❤️";
+        refs.errorMsg.classList.add('visible');
+        refs.gateCard.classList.add('shake');
+        setTimeout(() => refs.gateCard.classList.remove('shake'), 400);
       }
     });
 
     function transitionToLoader() {
-      gateEl.classList.remove('active');
-      gateEl.classList.add('exit');
+      refs.gate.classList.remove('active');
+      refs.gate.classList.add('exit');
       setTimeout(() => {
-        gateEl.style.display = 'none';
-        loaderEl.classList.add('active');
+        refs.gate.style.display = 'none';
+        refs.loader.classList.add('active');
         startLoaderAnimation();
       }, 650);
     }
 
+    /* ── Heartbeat Animation ────────────────────────────────── */
     function startLoaderAnimation() {
-      const streakController = initRefinedStreaks(loaderCanvas);
+      const heartController = initHeartbeatCanvas(refs.loaderCanvas);
       let progress = 0;
       const barInterval = setInterval(() => {
-        progress = Math.min(progress + 1.5, 100);
-        loaderBar.style.width = progress + '%';
+        progress = Math.min(progress + 1.2, 100);
+        refs.loaderBar.style.width = progress + '%';
         if (progress >= 100) clearInterval(barInterval);
       }, 80);
 
-      loaderGreeting.textContent = `Happy Birthday, ${CONTENT.name} ✨`;
-      setTimeout(() => loaderGreeting.classList.add('visible'), 800);
-      setTimeout(() => loaderSub.classList.add('visible'), 1400);
+      refs.loaderGreeting.textContent = `Happy Birthday, ${CONTENT.name} ✨`;
+      setTimeout(() => refs.loaderGreeting.classList.add('visible'), 800);
+      setTimeout(() => refs.loaderSub.classList.add('visible'), 1400);
 
       setTimeout(() => {
-        streakController.stop();
-        loaderEl.classList.remove('active');
-        loaderEl.classList.add('exit');
+        heartController.stop();
+        refs.loader.classList.remove('active');
+        refs.loader.classList.add('exit');
         setTimeout(() => {
-          loaderEl.style.display = 'none';
+          refs.loader.style.display = 'none';
           showFavPicStage();
         }, 700);
       }, 6500);
@@ -92,7 +97,7 @@
     }
 
     function showMain() {
-      mainEl.classList.add('active');
+      refs.main.classList.add('active');
       renderStory();
       buildGallery();
       renderTimeline();
@@ -158,45 +163,49 @@
       document.getElementById('lightbox').classList.remove('active');
     });
 
-    /* ── Typewriter (RE-FIXED) ────────────────────────────── */
+    /* ── Typewriter (Simplified & Robust) ───────────────────── */
     function startTypewriter() {
-      const el = document.getElementById('typewriter-text');
       const messages = CONTENT.messages;
-      if (!el || !messages.length) return;
+      const el = refs.typewriter;
+      if (!el || !messages.length) { unlockScroll(); return; }
 
-      let msgIdx = 0, charIdx = 0, deleting = false, pause = 0;
+      let mIdx = 0, cIdx = 0, isDeleting = false;
 
-      function tick() {
-        if (pause > 0) { pause--; setTimeout(tick, 100); return; }
-        
-        const msg = messages[msgIdx];
-        if (!deleting) {
-          el.textContent = msg.slice(0, ++charIdx);
-          if (charIdx < msg.length) {
-            setTimeout(tick, 30 + Math.random() * 40);
+      function type() {
+        const currentMsg = messages[mIdx];
+        if (!isDeleting) {
+          el.textContent = currentMsg.substring(0, ++cIdx);
+          if (cIdx === currentMsg.length) {
+            if (mIdx === messages.length - 1) {
+              setTimeout(unlockScroll, 1000);
+              return;
+            }
+            setTimeout(() => { isDeleting = true; type(); }, 2000);
           } else {
-            if (msgIdx === messages.length - 1) { unlockScroll(); return; }
-            pause = 25; deleting = true; setTimeout(tick, 500);
+            setTimeout(type, 30 + Math.random() * 30);
           }
         } else {
-          el.textContent = msg.slice(0, --charIdx);
-          if (charIdx > 0) {
-            setTimeout(tick, 20);
+          el.textContent = currentMsg.substring(0, --cIdx);
+          if (cIdx === 0) {
+            isDeleting = false;
+            mIdx = (mIdx + 1) % messages.length;
+            setTimeout(type, 500);
           } else {
-            deleting = false;
-            msgIdx = (msgIdx + 1) % messages.length;
-            setTimeout(tick, 200);
+            setTimeout(type, 20);
           }
         }
       }
-
+      
       function unlockScroll() {
-        mainEl.classList.remove('scroll-locked');
-        document.getElementById('read-hint').style.display = 'none';
-        const hint = document.getElementById('main-scroll-hint');
-        hint.style.opacity = '1'; hint.style.pointerEvents = 'all';
+        refs.main.classList.remove('scroll-locked');
+        if (refs.readHint) refs.readHint.style.display = 'none';
+        if (refs.scrollHint) {
+          refs.scrollHint.style.opacity = '1';
+          refs.scrollHint.style.pointerEvents = 'all';
+        }
       }
-      tick();
+
+      type();
     }
 
     function initScrollReveal() {
@@ -209,26 +218,50 @@
     function initStarCanvas(c) {
       const ctx = c.getContext('2d');
       let w, h, stars = [];
-      function resize() { w = c.width = window.innerWidth; h = c.height = window.innerHeight; stars = Array.from({length: 150}, () => ({x: Math.random()*w, y: Math.random()*h, r: Math.random()*1.2, o: Math.random()})); }
+      function resize() { w = c.width = window.innerWidth; h = c.height = window.innerHeight; stars = Array.from({length: 120}, () => ({x: Math.random()*w, y: Math.random()*h, r: Math.random()*1.2, o: Math.random()})); }
       window.addEventListener('resize', resize); resize();
       function draw() { ctx.clearRect(0,0,w,h); stars.forEach(s => { ctx.fillStyle = `rgba(255,255,255,${s.o})`; ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI*2); ctx.fill(); }); requestAnimationFrame(draw); }
       draw();
     }
 
-    function initRefinedStreaks(c) {
+    /* ── Heartbeat Monitor Canvas ──────────────────────────── */
+    function initHeartbeatCanvas(c) {
       const ctx = c.getContext('2d');
-      let w, h, active = true;
+      let w, h, active = true, x = 0;
       function resize() { w = c.width = window.innerWidth; h = c.height = window.innerHeight; }
       window.addEventListener('resize', resize); resize();
-      const lines = Array.from({length: 25}, () => ({y: Math.random(), s: 8 + Math.random()*12, c: Math.random()>0.6?'#3b82f6':'#ef4444', w: 0.5 + Math.random(), o: Math.random()*w}));
+      
+      const points = [];
       function draw() {
         if (!active) return;
-        ctx.fillStyle = 'rgba(5, 7, 10, 0.2)'; ctx.fillRect(0,0,w,h);
-        lines.forEach(l => {
-          l.o += l.s; if (l.o > w) l.o = -300;
-          ctx.beginPath(); ctx.strokeStyle = l.c; ctx.lineWidth = l.w; ctx.globalAlpha = 0.4;
-          ctx.moveTo(l.o, l.y*h); ctx.lineTo(l.o+250, l.y*h); ctx.stroke();
-        });
+        ctx.fillStyle = 'rgba(5, 7, 10, 0.1)';
+        ctx.fillRect(0, 0, w, h);
+
+        ctx.strokeStyle = '#ef4444';
+        ctx.lineWidth = 2;
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = '#ef4444';
+        
+        ctx.beginPath();
+        let y = h / 2;
+        // Heartbeat spike logic
+        const cycle = (x % 200);
+        if (cycle > 140 && cycle < 150) y -= 40; // P wave
+        else if (cycle >= 150 && cycle < 155) y += 10; // Q
+        else if (cycle >= 155 && cycle < 165) y -= 120; // R (Big spike)
+        else if (cycle >= 165 && cycle < 170) y += 30; // S
+        else if (cycle >= 180 && cycle < 195) y -= 20; // T wave
+
+        points.push({x, y});
+        if (points.length > 50) points.shift();
+
+        for(let i=1; i<points.length; i++){
+          ctx.moveTo(points[i-1].x % w, points[i-1].y);
+          ctx.lineTo(points[i].x % w, points[i].y);
+        }
+        ctx.stroke();
+
+        x += 4;
         requestAnimationFrame(draw);
       }
       draw();
