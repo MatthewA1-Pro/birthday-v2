@@ -375,6 +375,56 @@ img, video { display: block; max-width: 100%; }
   pointer-events: all;
 }
 
+#main.scroll-locked {
+  overflow: hidden !important;
+}
+
+/* ── Favorite Pic Stage ────────────────────────────────────── */
+.fav-pic-container {
+  text-align: center;
+  max-width: min(400px, 85vw);
+  animation: fadeInScale 1.2s var(--ease-out-expo) both;
+}
+
+.fav-pic-img {
+  width: 100%;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 40px var(--blue-glow);
+  border: 1px solid var(--glass-border);
+  margin-bottom: 2rem;
+}
+
+.fav-pic-text {
+  font-family: var(--ff-serif);
+  font-size: 1.5rem;
+  font-style: italic;
+  background: linear-gradient(135deg, #fff, var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@keyframes fadeInScale {
+  from { opacity: 0; transform: scale(0.9) translateY(20px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.read-hint {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--blue-neon);
+  opacity: 0.6;
+  margin-top: 1.5rem;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+
+
 /* ── Section wrapper ───────────────────────────────────────── */
 .section {
   min-height: 100vh;

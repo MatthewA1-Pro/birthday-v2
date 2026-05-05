@@ -87,9 +87,19 @@
 
 
   <!-- ═══════════════════════════════════════════════════════════
+       LAYER 2.5 — FAVORITE PICTURE MOMENT
+  ════════════════════════════════════════════════════════════════ -->
+  <div id="fav-pic-stage" class="page-layer" aria-label="A special moment">
+    <div class="fav-pic-container">
+      <img src="assets/images/kiara.png" alt="Kiara" class="fav-pic-img">
+      <div class="fav-pic-text">This is my favorite picture of you. ❤️</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
        LAYER 3 — MAIN EXPERIENCE
   ════════════════════════════════════════════════════════════════ -->
-  <div id="main" aria-label="Birthday Experience">
+  <div id="main" class="scroll-locked" aria-label="Birthday Experience">
 
     <!-- ── HERO / MESSAGE ─────────────────────────────────────── -->
     <section id="sec-message" class="section" aria-label="Birthday Message">
@@ -108,8 +118,10 @@
         <span id="typewriter-text"></span><span class="cursor" aria-hidden="true"></span>
       </div>
 
+      <div id="read-hint" class="read-hint">Please wait for the message to finish... ❤️</div>
+
       <!-- Scroll hint -->
-      <div class="scroll-hint" aria-hidden="true">
+      <div id="main-scroll-hint" class="scroll-hint" style="opacity: 0; pointer-events: none;" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M12 5v14M5 12l7 7 7-7"/>
         </svg>

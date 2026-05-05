@@ -98,16 +98,32 @@
       setTimeout(() => loaderGreeting.classList.add('visible'), 800);
       setTimeout(() => loaderSub.classList.add('visible'),    1400);
 
-      // After ~6s → transition to main (Made longer per request)
+      // After ~6s → transition to Favorite Picture stage
       setTimeout(() => {
         streak.stop();
         loaderEl.classList.remove('active');
         loaderEl.classList.add('exit');
+        
         setTimeout(() => {
           loaderEl.style.display = 'none';
-          showMain();
+          showFavPicStage();
         }, 700);
       }, 6000);
+    }
+
+    function showFavPicStage() {
+      const favPicEl = document.getElementById('fav-pic-stage');
+      favPicEl.classList.add('active');
+
+      // Show for 4 seconds, then transition to main
+      setTimeout(() => {
+        favPicEl.classList.remove('active');
+        favPicEl.classList.add('exit');
+        setTimeout(() => {
+          favPicEl.style.display = 'none';
+          showMain();
+        }, 700);
+      }, 4500);
     }
 
     /* ────────────────────────────────────────────────────────── *
@@ -261,10 +277,29 @@
             setTimeout(tick, 20 + Math.random() * 15);
           } else {
             deleting = false;
+            
+            // Check if we finished the last message to unlock scroll
+            if (msgIdx === messages.length - 1) {
+              unlockScroll();
+            }
+
             msgIdx = (msgIdx + 1) % messages.length;
             pauseTicks = PAUSE_AFTER_DEL;
             setTimeout(tick, 60);
           }
+        }
+      }
+
+      function unlockScroll() {
+        const main = document.getElementById('main');
+        const hint = document.getElementById('read-hint');
+        const scrollHint = document.getElementById('main-scroll-hint');
+        
+        main.classList.remove('scroll-locked');
+        if (hint) hint.style.display = 'none';
+        if (scrollHint) {
+          scrollHint.style.opacity = '0.4';
+          scrollHint.style.pointerEvents = 'all';
         }
       }
 

@@ -5,17 +5,16 @@
 const CONTENT = {
 
   // ── Identity ───────────────────────────────────────────────
-  name: "Heart Beat ❤️",
+  name: "Kiara Oluwadamilola ❤️",
 
   // ── Access Answer ──────────────────────────────────────────
   birthday: "may 11",
 
   // ── Typewriter Messages ────────────────────────────────────
-  // Split into emotional chunks for a slower, heart-felt reading experience.
   messages: [
-    "Happy Birthday heart beat ❤️",
+    "Happy Birthday Kiara ❤️",
     "I don’t even know where to start because there’s so much I want to say to you today...",
-    "You mean everything to me truly the most important person in my life and I feel so lucky every single day that I get to call you mine.",
+    "Oluwadamilola, you mean everything to me truly the most important person in my life and I feel so lucky every single day that I get to call you mine.",
     "I love the way we laugh together, the way we joke around and how you make my life brighter in ways I didn’t even know were possible.",
     "I honestly can’t imagine my world without you in it.",
     "I want you to know that I would never do anything to hurt you, because your happiness means so much to me, and I’ll always do my best to protect what we have.",
@@ -36,6 +35,7 @@ const CONTENT = {
 
   // ── Gallery ────────────────────────────────────────────────
   images: [
+    "assets/images/kiara.png",
     "assets/images/1.jpg",
     "assets/images/2.jpg"
   ],
@@ -46,8 +46,8 @@ const CONTENT = {
 
   // ── Timeline ───────────────────────────────────────────────
   timeline: [
-    { date: "May 11", text: "The day my world got a whole lot brighter. ✨" },
-    { date: "Today",  text: "Celebrating you, the most important person in my life. ❤️" }
+    { date: "May 11", text: "The day Kiara Oluwadamilola was born. ✨" },
+    { date: "Today",  text: "My favorite person's special day. ❤️" }
   ]
 
 };
