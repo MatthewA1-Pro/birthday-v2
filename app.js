@@ -115,22 +115,33 @@
       const favPicEl = document.getElementById('fav-pic-stage');
       const imgEl = favPicEl.querySelector('.fav-pic-img');
       
-      // Update image source from content.js
-      if (imgEl && CONTENT.favPic) {
-        imgEl.src = CONTENT.favPic;
+      if (!CONTENT.favPic) {
+        showMain(); // Skip if no pic
+        return;
       }
-      
-      favPicEl.classList.add('active');
 
-      // Show for 4 seconds, then transition to main
-      setTimeout(() => {
-        favPicEl.classList.remove('active');
-        favPicEl.classList.add('exit');
+      // Pre-load the image to ensure it's ready
+      const tempImg = new Image();
+      tempImg.src = CONTENT.favPic;
+      tempImg.onload = () => {
+        imgEl.src = CONTENT.favPic;
+        favPicEl.classList.add('active');
+        
+        // Show for 5 seconds
         setTimeout(() => {
-          favPicEl.style.display = 'none';
-          showMain();
-        }, 700);
-      }, 4500);
+          favPicEl.classList.remove('active');
+          favPicEl.classList.add('exit');
+          setTimeout(() => {
+            favPicEl.style.display = 'none';
+            showMain();
+          }, 800);
+        }, 5000);
+      };
+      
+      tempImg.onerror = () => {
+        console.error("Favorite pic failed to load:", CONTENT.favPic);
+        showMain(); // Skip to main on error
+      };
     }
 
     /* ────────────────────────────────────────────────────────── *
