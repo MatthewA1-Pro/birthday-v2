@@ -382,12 +382,14 @@ img, video { display: block; max-width: 100%; }
 /* ── Favorite Pic Stage ────────────────────────────────────── */
 .fav-pic-container {
   text-align: center;
-  max-width: min(400px, 85vw);
+  max-width: min(380px, 80vw);
   animation: fadeInScale 1.2s var(--ease-out-expo) both;
 }
 
 .fav-pic-img {
   width: 100%;
+  max-height: 60vh;
+  object-fit: contain;
   border-radius: 20px;
   box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 40px var(--blue-glow);
   border: 1px solid var(--glass-border);
@@ -600,20 +602,39 @@ img, video { display: block; max-width: 100%; }
 .gallery-item .overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.6), transparent 60%);
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent 80%);
   opacity: 0;
   transition: opacity 0.4s;
   display: flex;
   align-items: flex-end;
-  padding: 1rem;
+  padding: 1.5rem;
+}
+
+.overlay-content {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.overlay-caption {
+  font-family: var(--ff-serif);
+  font-size: 0.95rem;
+  font-style: italic;
+  color: #fff;
+  margin: 0;
+  line-height: 1.4;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
 
 .gallery-item:hover .overlay { opacity: 1; }
 
 .gallery-item .overlay svg {
-  width: 28px; height: 28px;
-  color: #fff;
-  filter: drop-shadow(0 0 6px rgba(255,255,255,0.5));
+  width: 24px; height: 24px;
+  flex-shrink: 0;
+  color: var(--blue-neon);
+  filter: drop-shadow(0 0 8px var(--blue-glow));
 }
 
 /* ── Placeholder card ──────────────────────────────────────── */

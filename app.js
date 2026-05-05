@@ -94,7 +94,7 @@
       }, 80);
 
       // Greeting fade-in
-      loaderGreeting.textContent = `Happy Birthday, ${CONTENT.name} ✨`;
+      loaderGreeting.textContent = `Happy Birthday, ${CONTENT.name} (${CONTENT.altName}) ✨`;
       setTimeout(() => loaderGreeting.classList.add('visible'), 800);
       setTimeout(() => loaderSub.classList.add('visible'),    1400);
 
@@ -143,30 +143,28 @@
       const grid = document.getElementById('gallery-grid');
       grid.innerHTML = '';
 
-      const allMedia = [
-        ...CONTENT.images.map(src => ({ type: 'image', src })),
-        ...CONTENT.videos.map(src => ({ type: 'video', src }))
-      ];
-
-      if (allMedia.length === 0) {
-        grid.innerHTML = '<p style="color:rgba(240,244,255,0.3);font-size:0.85rem;letter-spacing:0.08em;">Add your images & videos to content.js</p>';
+      if (!CONTENT.gallery || CONTENT.gallery.length === 0) {
+        grid.innerHTML = '<p style="color:rgba(240,244,255,0.3);font-size:0.85rem;letter-spacing:0.08em;">Add your files to content.js</p>';
         return;
       }
 
-      allMedia.forEach(({ type, src }) => {
+      CONTENT.gallery.forEach(({ file, caption }) => {
         const item = document.createElement('div');
         item.className = 'gallery-item';
 
-        if (type === 'image') {
+        const isVideo = file.toLowerCase().endsWith('.mp4') || file.toLowerCase().endsWith('.webm');
+        const path = isVideo ? `assets/videos/${file}` : `assets/images/${file}`;
+
+        if (!isVideo) {
           const img = document.createElement('img');
-          img.src = src;
-          img.alt = 'Memory';
+          img.src = path;
+          img.alt = caption;
           img.loading = 'lazy';
           img.onerror = () => showPlaceholder(item);
           item.appendChild(img);
         } else {
           const vid = document.createElement('video');
-          vid.src = src;
+          vid.src = path;
           vid.muted = true;
           vid.loop = true;
           vid.playsInline = true;
@@ -177,16 +175,21 @@
           item.appendChild(vid);
         }
 
-        // Overlay with expand icon
+        // Overlay with caption
         const overlay = document.createElement('div');
         overlay.className = 'overlay';
-        overlay.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
-        </svg>`;
+        overlay.innerHTML = `
+          <div class="overlay-content">
+            <p class="overlay-caption">${caption}</p>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
+            </svg>
+          </div>
+        `;
         item.appendChild(overlay);
 
         // Lightbox click
-        item.addEventListener('click', () => openLightbox(type, src));
+        item.addEventListener('click', () => openLightbox(isVideo ? 'video' : 'image', path));
 
         grid.appendChild(item);
       });
