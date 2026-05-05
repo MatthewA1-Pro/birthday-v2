@@ -244,17 +244,50 @@ canvas {
 
 @keyframes blink { 50% { opacity: 0; } }
 
-.read-hint {
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--blue-neon);
-  opacity: 0.6;
-  margin-top: 1.5rem;
-  animation: pulse 2s infinite;
+/* ── Story / Letter Section ──────────────────────────────── */
+.story-container {
+  max-width: 900px;
+  width: 100%;
+  padding: 4rem 2rem;
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(15px);
+  border: 1px solid var(--glass-border);
+  border-radius: 40px;
+  box-shadow: 0 30px 100px rgba(0,0,0,0.5);
+  margin: 2rem 0;
 }
 
-@keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 0.8; } }
+.story-text-box {
+  text-align: left;
+  column-count: 1;
+}
+
+.story-p {
+  font-family: var(--ff-serif);
+  font-size: 1.3rem;
+  line-height: 1.8;
+  color: var(--text-main);
+  margin-bottom: 2rem;
+  font-style: italic;
+  opacity: 0.9;
+  position: relative;
+}
+
+.story-p::first-letter {
+  font-size: 3rem;
+  color: var(--gold);
+  float: left;
+  margin-right: 10px;
+  line-height: 1;
+  font-family: var(--ff-serif);
+}
+
+@media (min-width: 1024px) {
+  .story-text-box {
+    column-count: 2;
+    column-gap: 3rem;
+  }
+}
 
 .scroll-hint {
   position: absolute; bottom: 3rem; left: 50%; transform: translateX(-50%);

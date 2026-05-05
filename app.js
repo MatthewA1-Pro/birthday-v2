@@ -151,9 +151,23 @@
       mainEl.classList.add('active');
 
       buildGallery();
-      buildTimeline();
+      renderTimeline();
+      renderStory();
       startTypewriter();
       initScrollReveal();
+    }
+
+    /* ── Story Section Renderer ──────────────────────────────── */
+    function renderStory() {
+      const titleEl = document.getElementById('story-title');
+      const contentEl = document.getElementById('story-content');
+      
+      if (!CONTENT.story) return;
+
+      titleEl.textContent = CONTENT.story.title;
+      contentEl.innerHTML = CONTENT.story.paragraphs
+        .map(p => `<p class="story-p">${p}</p>`)
+        .join('');
     }
 
     /* ── Gallery Builder ─────────────────────────────────────── */
