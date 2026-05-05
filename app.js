@@ -14,8 +14,7 @@
     const loaderCanvas = document.getElementById('loader-canvas');
     const starCanvas   = document.getElementById('star-canvas');
 
-    const codeInput    = document.getElementById('access-code');
-    const bdayInput    = document.getElementById('bday');
+    const bdayInput    = document.getElementById('bday-answer');
     const submitBtn    = document.getElementById('btn-enter');
     const errorMsg     = document.getElementById('error-msg');
     const gateCard     = document.querySelector('.gate-card');
@@ -40,37 +39,21 @@
         .trim();
     }
 
-    function validateCode(raw) {
-      return normalize(raw) === normalize(CONTENT.accessCode);
-    }
-
     function validateBirthday(raw) {
-      // raw is YYYY-MM-DD from <input type="date">
-      if (!raw) return false;
-      const parts = raw.split('-'); // [YYYY, MM, DD]
-      const mmdd  = `${parts[1]}-${parts[2]}`;
-      return mmdd === CONTENT.birthday;
+      const normalized = normalize(raw);
+      // Validates for "may11" or "0511" or "may11th"
+      return normalized.includes("may11") || normalized === "0511" || normalized === "1105";
     }
 
     /* ── Submit Handler ──────────────────────────────────────── */
     submitBtn.addEventListener('click', handleSubmit);
-    [codeInput, bdayInput].forEach(el => {
-      el.addEventListener('keydown', e => { if (e.key === 'Enter') handleSubmit(); });
-    });
+    bdayInput.addEventListener('keydown', e => { if (e.key === 'Enter') handleSubmit(); });
 
     function handleSubmit() {
-      const codeOk = validateCode(codeInput.value);
       const bdayOk = validateBirthday(bdayInput.value);
 
-      if (!codeOk || !bdayOk) {
-        // Determine friendly message
-        if (!codeOk && !bdayOk) {
-          errorMsg.textContent = 'Hmm, those details don\'t seem right. Try again?';
-        } else if (!codeOk) {
-          errorMsg.textContent = 'That access code doesn\'t match — check the spelling?';
-        } else {
-          errorMsg.textContent = 'The birthday date isn\'t quite right. Give it another try.';
-        }
+      if (!bdayOk) {
+        errorMsg.textContent = "That doesn't seem to be the right date... try again? ❤️";
         errorMsg.classList.add('visible');
         gateCard.classList.remove('shake');
         void gateCard.offsetWidth; // reflow to restart animation
@@ -115,7 +98,7 @@
       setTimeout(() => loaderGreeting.classList.add('visible'), 800);
       setTimeout(() => loaderSub.classList.add('visible'),    1400);
 
-      // After ~3.8s → transition to main
+      // After ~6s → transition to main (Made longer per request)
       setTimeout(() => {
         streak.stop();
         loaderEl.classList.remove('active');
@@ -124,7 +107,7 @@
           loaderEl.style.display = 'none';
           showMain();
         }, 700);
-      }, 3800);
+      }, 6000);
     }
 
     /* ────────────────────────────────────────────────────────── *
@@ -264,9 +247,9 @@
         if (!deleting) {
           if (charIdx < msg.length) {
             el.textContent = msg.slice(0, ++charIdx);
-            // Vary speed slightly for realism
-            const variance = 18 + Math.random() * 45;
-            setTimeout(tick, msg[charIdx - 1] === ' ' ? variance * 0.6 : variance);
+            // Slower speed for easy reading
+            const variance = 55 + Math.random() * 90;
+            setTimeout(tick, msg[charIdx - 1] === ' ' ? variance * 0.7 : variance);
           } else {
             pauseTicks = PAUSE_AFTER_WRITE;
             deleting = true;
@@ -275,7 +258,7 @@
         } else {
           if (charIdx > 0) {
             el.textContent = msg.slice(0, --charIdx);
-            setTimeout(tick, 28 + Math.random() * 18);
+            setTimeout(tick, 20 + Math.random() * 15);
           } else {
             deleting = false;
             msgIdx = (msgIdx + 1) % messages.length;

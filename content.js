@@ -1,49 +1,53 @@
 // ============================================================
 //  BIRTHDAY PORTAL — CONTENT CONFIGURATION
-//  Edit this file to customize the experience.
 // ============================================================
 
 const CONTENT = {
 
   // ── Identity ───────────────────────────────────────────────
-  name: "Her Name",
+  name: "Heart Beat ❤️",
 
-  // ── Access Gate ────────────────────────────────────────────
-  // Case-insensitive, spaces / punctuation are stripped before compare
-  accessCode: "march 23",
-
-  // Birthday in MM-DD format (month-day only)
-  birthday: "03-23",
+  // ── Access Answer ──────────────────────────────────────────
+  birthday: "may 11",
 
   // ── Typewriter Messages ────────────────────────────────────
-  // Each string plays one after another with a blinking cursor.
+  // Split into emotional chunks for a slower, heart-felt reading experience.
   messages: [
-    "I didn't plan to meet someone like you…",
-    "But somehow, you became my favorite part of everything.",
-    "Every moment with you feels like a scene I never want to skip.",
-    "Today is about you — and honestly, I'm just lucky to be part of your story.",
-    "Happy Birthday. ✨"
+    "Happy Birthday heart beat ❤️",
+    "I don’t even know where to start because there’s so much I want to say to you today...",
+    "You mean everything to me truly the most important person in my life and I feel so lucky every single day that I get to call you mine.",
+    "I love the way we laugh together, the way we joke around and how you make my life brighter in ways I didn’t even know were possible.",
+    "I honestly can’t imagine my world without you in it.",
+    "I want you to know that I would never do anything to hurt you, because your happiness means so much to me, and I’ll always do my best to protect what we have.",
+    "I hope I use my punctuation mark correctly this time 😭😂😂",
+    "Today is all about you and it marks a new year and a fresh start of your life and I hope with all my heart that this becomes one of the best birthdays you’ve ever had.",
+    "You deserve so much happiness, love, and joy, not just today but every single day.",
+    "I’m looking forward to celebrating with you, laughing with you, and making memories that we’ll look back on together.",
+    "And this is just one of many birthdays we’re going to celebrate side by side, because I want a future with you filled with moments like this for real.",
+    "I also want to say I’m really sorry for not wishing you properly on our first month anniversary. I should have done better, and I hope you can forgive me.",
+    "You deserve to feel special every time, and I’ll make sure I don’t miss moments like that again.",
+    "Today, I just hope I can make you smile and show you even a small part of how much you mean to me.",
+    "I don’t ever want to lose you. and I swear I care about you more than words can fully explain.",
+    "I hope I’m the first person to wish you a happy birthday today, because you deserve to start your day feeling loved from the very first moment and know MAY 11 is just all about you.",
+    "So once again happy birthday ❤️ I love you so much and I’m so excited for everything we still have ahead of us together.",
+    "And yeah we don’t know what future holds but I pray this ends well.",
+    "I love you mama enjoy your day and good luck with your exams tomorrow and make mum proud 🥹💋"
   ],
 
-  // ── Gallery Images ─────────────────────────────────────────
-  // Drop your images into assets/images/ and list them here.
+  // ── Gallery ────────────────────────────────────────────────
   images: [
     "assets/images/1.jpg",
     "assets/images/2.jpg"
   ],
 
-  // ── Gallery Videos ─────────────────────────────────────────
-  // Drop your videos into assets/videos/ and list them here.
   videos: [
     "assets/videos/1.mp4"
   ],
 
-  // ── Memory Timeline ────────────────────────────────────────
-  // Optional moments shown in a vertical timeline.
+  // ── Timeline ───────────────────────────────────────────────
   timeline: [
-    { date: "Day One",       text: "The first time I realized you were different." },
-    { date: "A Little Later", text: "Laughing until it hurt — I knew then." },
-    { date: "Right Now",     text: "Still the best decision I never planned." }
+    { date: "May 11", text: "The day my world got a whole lot brighter. ✨" },
+    { date: "Today",  text: "Celebrating you, the most important person in my life. ❤️" }
   ]
 
 };
