@@ -1,5 +1,5 @@
 // ============================================================
-//  BIRTHDAY PORTAL — FINAL MASTER CONTENT (PATH FIX)
+//  BIRTHDAY PORTAL — FINAL MASTER CONTENT (EXTENSION FIX)
 // ============================================================
 
 const CONTENT = {
@@ -9,8 +9,8 @@ const CONTENT = {
   birthday: "may 11",
 
   // ── FAVORITE PICTURE FIX ──────────────────────────────────
-  // Change this to the EXACT filename you saved in assets/images/
-  favPic: "assets/images/favorite.jpg",
+  // Updated to match the REAL filename in your folder: favorite.jpg.jpeg
+  favPic: "assets/images/favorite.jpg.jpeg",
 
   // ── Typewriter Messages ────────────────────────────────────
   messages: [
@@ -45,15 +45,14 @@ const CONTENT = {
     "I love you mama. Enjoy your day and good luck with your exams tomorrow... make mum proud 🥹💋"
   ],
 
-  // ── DYNAMIC GALLERY ────────────────────────────────────────
-  // Updated with the actual filenames found in your folder!
+  // ── SUPER FLEXIBLE GALLERY ────────────────────────────────
   gallery: [
-    { src: "assets/images/WhatsApp Image 2026-05-05 at 13.16.23.jpeg", caption: "My favorite picture of you. ❤️" },
-    { src: "assets/images/1.jpg.jpeg", caption: "I felt so special when I got this from you" },
-    { src: "assets/images/4.jpg.jpeg", caption: "Cute right? 🌚" },
-    { src: "assets/images/3.jpg",      caption: "Every moment with you is priceless 🥹" },
-    { src: "assets/images/2.jpg",      caption: "You a baddie for real 🔥" },
-    { src: "assets/videos/6.mp4",      caption: "I don’t think I can go two days without watching this 😂😂" }
+    { src: "assets/images/favorite.jpg.jpeg", caption: "My favorite picture of you. ❤️" },
+    { src: "assets/images/1.jpg.jpeg",        caption: "I felt so special when I got this from you" },
+    { src: "assets/images/4.jpg.jpeg",        caption: "Cute right? 🌚" },
+    { src: "assets/images/3.jpg",             caption: "Every moment with you is priceless 🥹" },
+    { src: "assets/images/2.jpg",             caption: "You a baddie for real 🔥" },
+    { src: "assets/videos/6.mp4",             caption: "I don’t think I can go two days without watching this 😂😂" }
   ],
 
   timeline: [
