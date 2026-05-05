@@ -1,10 +1,8 @@
 /* ============================================================
-   BIRTHDAY PORTAL — MAIN APP
-   Reads from CONTENT (content.js) — no backend required.
+   BIRTHDAY PORTAL — MAIN APP (LUXURY EDITION)
    ============================================================ */
 
 (() => {
-  /* ── Wait for DOM ──────────────────────────────────────────── */
   document.addEventListener('DOMContentLoaded', () => {
 
     /* ── Refs ────────────────────────────────────────────────── */
@@ -23,25 +21,15 @@
     const loaderSub      = document.querySelector('.loader-sub');
     const loaderBar      = document.querySelector('.loader-bar');
 
-    /* ── Star Canvas background ──────────────────────────────── */
+    /* ── Star Background ────────────────────────────────────── */
     initStarCanvas(starCanvas);
-
-    /* ── Gate: show immediately ──────────────────────────────── */
     gateEl.classList.add('active');
 
-    /* ────────────────────────────────────────────────────────── *
-     * VALIDATION LOGIC
-     * ────────────────────────────────────────────────────────── */
-    function normalize(str) {
-      return str
-        .toLowerCase()
-        .replace(/[\s\-_.,!?'"]/g, '') 
-        .trim();
-    }
-
+    /* ── Validation ─────────────────────────────────────────── */
+    function normalize(str) { return str.toLowerCase().replace(/[\s\-_.,!?'"]/g, '').trim(); }
     function validateBirthday(raw) {
-      const normalized = normalize(raw);
-      return normalized.includes("may11") || normalized === "0511" || normalized === "1105";
+      const n = normalize(raw);
+      return n.includes("may11") || n === "0511" || n === "1105";
     }
 
     submitBtn.addEventListener('click', handleSubmit);
@@ -49,7 +37,6 @@
 
     function handleSubmit() {
       if (validateBirthday(bdayInput.value)) {
-        errorMsg.classList.remove('visible');
         transitionToLoader();
       } else {
         errorMsg.textContent = "That doesn't seem to be the right date... try again? ❤️";
@@ -70,34 +57,34 @@
       }, 650);
     }
 
+    /* ── Luxury Loader Animation ────────────────────────────── */
     function startLoaderAnimation() {
-      const streak = initStreakCanvas(loaderCanvas);
+      const streakController = initLuxuryStreaks(loaderCanvas);
       let progress = 0;
       const barInterval = setInterval(() => {
-        progress = Math.min(progress + Math.random() * 3, 100);
+        progress = Math.min(progress + Math.random() * 2.5, 100);
         loaderBar.style.width = progress + '%';
         if (progress >= 100) clearInterval(barInterval);
-      }, 80);
+      }, 70);
 
-      loaderGreeting.textContent = `Happy Birthday, ${CONTENT.name} (${CONTENT.altName}) ✨`;
+      loaderGreeting.textContent = `Happy Birthday, ${CONTENT.name} ✨`;
       setTimeout(() => loaderGreeting.classList.add('visible'), 800);
       setTimeout(() => loaderSub.classList.add('visible'), 1400);
 
       setTimeout(() => {
-        streak.stop();
+        streakController.stop();
         loaderEl.classList.remove('active');
         loaderEl.classList.add('exit');
         setTimeout(() => {
           loaderEl.style.display = 'none';
           showFavPicStage();
         }, 700);
-      }, 6000);
+      }, 6500);
     }
 
     function showFavPicStage() {
       const favPicEl = document.getElementById('fav-pic-stage');
       const imgEl = favPicEl.querySelector('.fav-pic-img');
-      
       const tempImg = new Image();
       tempImg.src = CONTENT.favPic;
       tempImg.onload = () => {
@@ -115,9 +102,6 @@
       tempImg.onerror = () => showMain();
     }
 
-    /* ────────────────────────────────────────────────────────── *
-     * MAIN CONTENT
-     * ────────────────────────────────────────────────────────── */
     function showMain() {
       mainEl.classList.add('active');
       renderStory();
@@ -175,7 +159,6 @@
       });
     }
 
-    /* ── Lightbox (Full Screen) ────────────────────────────── */
     function openLightbox(type, src) {
       const lb = document.getElementById('lightbox');
       const content = lb.querySelector('.lightbox-content');
@@ -190,7 +173,7 @@
       document.getElementById('lightbox').querySelector('.lightbox-content').innerHTML = '';
     });
 
-    /* ── Typewriter Logic ────────────────────────────────────── */
+    /* ── Typewriter Logic (Restored Organic Feel) ───────────── */
     function startTypewriter() {
       const el = document.getElementById('typewriter-text');
       const messages = CONTENT.messages;
@@ -202,10 +185,11 @@
         if (!deleting) {
           if (charIdx < msg.length) {
             el.textContent = msg.slice(0, ++charIdx);
-            setTimeout(tick, 20 + Math.random() * 25);
+            const variance = 25 + Math.random() * 35;
+            setTimeout(tick, msg[charIdx - 1] === ' ' ? variance * 0.6 : variance);
           } else {
             if (msgIdx === messages.length - 1) { unlockScroll(); return; }
-            pauseTicks = 20; deleting = true; setTimeout(tick, 60);
+            pauseTicks = 30; deleting = true; setTimeout(tick, 60);
           }
         } else {
           if (charIdx > 0) { el.textContent = msg.slice(0, --charIdx); setTimeout(tick, 15); }
@@ -219,44 +203,46 @@
         const hint = document.getElementById('main-scroll-hint');
         hint.style.opacity = '1'; hint.style.pointerEvents = 'all';
       }
-      setTimeout(tick, 800);
+      setTimeout(tick, 1200);
     }
 
     function initScrollReveal() {
       const observer = new IntersectionObserver(entries => {
         entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('show'); });
       }, { threshold: 0.1 });
-      document.querySelectorAll('.timeline-item').forEach(el => observer.observe(el));
+      document.querySelectorAll('.timeline-item, .story-p').forEach(el => observer.observe(el));
     }
 
-    /* ── Canvas Backgrounds (Simplified) ───────────────────── */
+    /* ── High-End Canvas Backgrounds ──────────────────────── */
     function initStarCanvas(c) {
       const ctx = c.getContext('2d');
       let w, h, stars = [];
-      function resize() { w = c.width = window.innerWidth; h = c.height = window.innerHeight; stars = Array.from({length: 150}, () => ({x: Math.random()*w, y: Math.random()*h, r: Math.random()*1.5, o: Math.random()})); }
+      function resize() { w = c.width = window.innerWidth; h = c.height = window.innerHeight; stars = Array.from({length: 150}, () => ({x: Math.random()*w, y: Math.random()*h, r: Math.random()*1.5, o: Math.random(), v: Math.random()*0.2})); }
       window.addEventListener('resize', resize); resize();
-      function draw() { ctx.clearRect(0,0,w,h); stars.forEach(s => { ctx.fillStyle = `rgba(255,255,255,${s.o})`; ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI*2); ctx.fill(); }); requestAnimationFrame(draw); }
+      function draw() { ctx.clearRect(0,0,w,h); stars.forEach(s => { s.y -= s.v; if(s.y<0) s.y=h; ctx.fillStyle = `rgba(255,255,255,${s.o})`; ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI*2); ctx.fill(); }); requestAnimationFrame(draw); }
       draw();
     }
 
-    function initStreakCanvas(c) {
+    function initLuxuryStreaks(c) {
       const ctx = c.getContext('2d');
       let w, h, active = true;
       function resize() { w = c.width = window.innerWidth; h = c.height = window.innerHeight; }
       window.addEventListener('resize', resize); resize();
+      const lines = Array.from({length: 40}, () => ({y: Math.random(), s: 5 + Math.random()*15, c: Math.random()>0.5?'#3b82f6':'#ef4444', w: 1+Math.random()*2, o: Math.random()*w}));
       function draw() {
         if (!active) return;
-        ctx.fillStyle = 'rgba(0,0,0,0.1)'; ctx.fillRect(0,0,w,h);
-        for(let i=0; i<5; i++) {
-          ctx.strokeStyle = Math.random() > 0.5 ? '#3b82f6' : '#ef4444';
-          ctx.lineWidth = Math.random()*2;
-          const y = Math.random()*h;
-          ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y + (Math.random()-0.5)*100); ctx.stroke();
-        }
+        ctx.fillStyle = 'rgba(0,0,0,0.15)'; ctx.fillRect(0,0,w,h);
+        lines.forEach(l => {
+          l.o += l.s; if (l.o > w) l.o = -200;
+          ctx.beginPath(); ctx.strokeStyle = l.c; ctx.lineWidth = l.w; ctx.globalAlpha = 0.6;
+          const yPos = l.y * h;
+          ctx.moveTo(l.o, yPos); ctx.lineTo(l.o + 200, yPos); ctx.stroke();
+          ctx.shadowBlur = 10; ctx.shadowColor = l.c;
+        });
         requestAnimationFrame(draw);
       }
       draw();
-      return { stop: () => active = false };
+      return { stop: () => { active = false; ctx.clearRect(0,0,w,h); } };
     }
   });
 })();
