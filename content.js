@@ -9,8 +9,8 @@ const CONTENT = {
   birthday: "may 11",
 
   // ── FAVORITE PICTURE FIX ──────────────────────────────────
-  // Updated to match the REAL filename in your folder
-  favPic: "assets/images/WhatsApp Image 2026-05-05 at 13.16.23.jpeg",
+  // Change this to the EXACT filename you saved in assets/images/
+  favPic: "assets/images/favorite.jpg",
 
   // ── Typewriter Messages ────────────────────────────────────
   messages: [
