@@ -65,15 +65,18 @@
       setTimeout(() => refs.loaderGreeting.classList.add('visible'), 800);
       setTimeout(() => refs.loaderSub.classList.add('visible'), 1400);
 
-      setTimeout(() => {
-        heartController.stop();
-        refs.loader.classList.remove('active');
-        refs.loader.classList.add('exit');
-        setTimeout(() => {
-          refs.loader.style.display = 'none';
-          showFavPicStage();
-        }, 700);
-      }, 6500);
+      const checkInterval = setInterval(() => {
+        if (heartController.getX() > window.innerWidth + 200) {
+          clearInterval(checkInterval);
+          heartController.stop();
+          refs.loader.classList.remove('active');
+          refs.loader.classList.add('exit');
+          setTimeout(() => {
+            refs.loader.style.display = 'none';
+            showFavPicStage();
+          }, 700);
+        }
+      }, 200);
     }
 
     function showFavPicStage() {
@@ -145,7 +148,7 @@
     }
 
     function renderTimeline() {
-      const list = document.getElementById('timeline-list');
+      const list = document.getElementById('timeline');
       list.innerHTML = '';
       (CONTENT.timeline || []).forEach(item => {
         const div = document.createElement('div');
@@ -267,7 +270,10 @@
         requestAnimationFrame(draw);
       }
       draw();
-      return { stop: () => { active = false; ctx.clearRect(0,0,w,h); } };
+      return { 
+        stop: () => { active = false; ctx.clearRect(0,0,w,h); },
+        getX: () => x
+      };
     }
   });
 })();
