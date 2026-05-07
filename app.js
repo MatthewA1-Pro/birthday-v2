@@ -129,7 +129,10 @@
           const vid = document.createElement('video');
           vid.src = src; vid.muted = true; vid.loop = true; vid.playsInline = true;
           item.appendChild(vid);
-          item.addEventListener('mouseenter', () => vid.play());
+          item.addEventListener('mouseenter', () => {
+            const p = vid.play();
+            if(p !== undefined) p.catch(() => {});
+          });
           item.addEventListener('mouseleave', () => { vid.pause(); vid.currentTime = 0; });
         }
         const overlay = document.createElement('div');
@@ -169,30 +172,30 @@
       const el = refs.typewriter;
       if (!el || !messages.length) { unlockScroll(); return; }
 
-      let mIdx = 0, cIdx = 0, isDeleting = false;
+      let mIdx = 0, cIdx = 0;
+      el.style.transition = 'opacity 0.4s';
 
       function type() {
         const currentMsg = messages[mIdx];
-        if (!isDeleting) {
-          el.textContent = currentMsg.substring(0, ++cIdx);
-          if (cIdx === currentMsg.length) {
-            if (mIdx === messages.length - 1) {
-              setTimeout(unlockScroll, 1000);
-              return;
-            }
-            setTimeout(() => { isDeleting = true; type(); }, 2000);
-          } else {
-            setTimeout(type, 30 + Math.random() * 30);
+        el.textContent = currentMsg.substring(0, ++cIdx);
+        
+        if (cIdx === currentMsg.length) {
+          if (mIdx === messages.length - 1) {
+            setTimeout(unlockScroll, 1000);
+            return;
           }
+          setTimeout(() => {
+            el.style.opacity = '0';
+            setTimeout(() => {
+              mIdx++;
+              cIdx = 0;
+              el.textContent = '';
+              el.style.opacity = '1';
+              type();
+            }, 500);
+          }, 2500);
         } else {
-          el.textContent = currentMsg.substring(0, --cIdx);
-          if (cIdx === 0) {
-            isDeleting = false;
-            mIdx = (mIdx + 1) % messages.length;
-            setTimeout(type, 500);
-          } else {
-            setTimeout(type, 20);
-          }
+          setTimeout(type, 30 + Math.random() * 30);
         }
       }
       
@@ -234,13 +237,12 @@
       const points = [];
       function draw() {
         if (!active) return;
-        ctx.fillStyle = 'rgba(5, 7, 10, 0.1)';
-        ctx.fillRect(0, 0, w, h);
+        ctx.clearRect(0, 0, w, h);
 
-        ctx.strokeStyle = '#ef4444';
-        ctx.lineWidth = 2;
-        ctx.shadowBlur = 10;
-        ctx.shadowColor = '#ef4444';
+        ctx.strokeStyle = '#ff1e1e'; // Premium Lexus Taillight Red
+        ctx.lineWidth = 3;
+        ctx.shadowBlur = 15;
+        ctx.shadowColor = '#ff1e1e';
         
         ctx.beginPath();
         let y = h / 2;

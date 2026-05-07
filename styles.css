@@ -132,7 +132,7 @@ canvas {
 }
 
 /* ── 2. Loader ───────────────────────────────────────────── */
-#loader { background: #000; z-index: 20; }
+#loader { background: transparent; z-index: 20; }
 
 .loader-content { text-align: center; }
 

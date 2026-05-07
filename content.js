@@ -38,8 +38,14 @@ const CONTENT = {
   gallery: [
     { src: "assets/images/favorite.jpg.jpeg", caption: "My favorite picture of you ❤️" },
     { src: "assets/images/1.jpg.jpeg",        caption: "I felt so special when I got this from you" },
+    { src: "assets/videos/2.mp4",             caption: "The way you smile here..." },
+    { src: "assets/videos/3.mp4",             caption: "Unforgettable moments" },
     { src: "assets/images/4.jpg.jpeg",        caption: "Just every moment with you is priceless 🥹" },
-    { src: "assets/images/WhatsApp Image 2026-05-05 at 13.16.23.jpeg", caption: "You a baddie for real 🔥" }
+    { src: "assets/images/WhatsApp Image 2026-05-05 at 13.16.23.jpeg", caption: "You a baddie for real 🔥" },
+    { src: "assets/videos/WhatsApp Video 2026-05-05 at 13.15.28.mp4", caption: "Always making me smile" },
+    { src: "assets/videos/WhatsApp Video 2026-05-05 at 13.16.23.mp4", caption: "Beautiful energy" },
+    { src: "assets/videos/WhatsApp Video 2026-05-05 at 13.16.37.mp4", caption: "So perfect" },
+    { src: "assets/videos/WhatsApp Video 2026-05-05 at 13.16.37 (1).mp4", caption: "Memories to cherish" }
   ],
 
   timeline: [
