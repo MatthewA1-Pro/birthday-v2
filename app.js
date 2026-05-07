@@ -26,6 +26,18 @@
     initStarCanvas(refs.starCanvas);
     refs.gate.classList.add('active');
 
+    const bgm = document.getElementById('bg-music');
+    if (bgm) bgm.volume = 0.4; // not too loud
+
+    // Attempt to play on first interaction (in case autoplay is blocked)
+    const playBgm = () => {
+      if (bgm && bgm.paused) bgm.play().catch(()=>{});
+      document.removeEventListener('click', playBgm);
+      document.removeEventListener('touchstart', playBgm);
+    };
+    document.addEventListener('click', playBgm);
+    document.addEventListener('touchstart', playBgm);
+
     function normalize(str) { return str.toLowerCase().replace(/[\s\-_.,!?'"]/g, '').trim(); }
     
     refs.submitBtn.addEventListener('click', () => {
@@ -171,7 +183,7 @@
     function openLightbox(type, src) {
       const lb = document.getElementById('lightbox');
       const content = lb.querySelector('.lightbox-content');
-      content.innerHTML = type === 'video' ? `<video src="${src}" controls autoplay playsinline style="width:100%;height:100%;object-fit:contain;"></video>` : `<img src="${src}">`;
+      content.innerHTML = type === 'video' ? `<video src="${src}" controls autoplay playsinline></video>` : `<img src="${src}">`;
       lb.classList.add('active');
       
       if (type === 'video') {
