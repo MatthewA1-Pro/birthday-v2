@@ -32,6 +32,8 @@
       const input = refs.bdayInput.value;
       const normalized = normalize(input);
       if (normalized.includes("may11") || normalized === "0511" || normalized === "1105") {
+        const bgm = document.getElementById('bg-music');
+        if (bgm) bgm.play().catch(e => console.log('Audio autoplay blocked', e));
         transitionToLoader();
       } else {
         refs.errorMsg.textContent = "That doesn't seem to be the right date... try again? ❤️";
@@ -140,7 +142,15 @@
         }
         const overlay = document.createElement('div');
         overlay.className = 'overlay';
-        overlay.innerHTML = `<div class="overlay-content"><p class="overlay-caption">${caption}</p></div>`;
+        overlay.innerHTML = `
+          <div class="overlay-content">
+            <p class="overlay-caption">${caption}</p>
+            <div class="expand-btn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
+              </svg>
+            </div>
+          </div>`;
         item.appendChild(overlay);
         item.addEventListener('click', () => openLightbox(isVideo ? 'video' : 'image', src));
         grid.appendChild(item);
@@ -161,12 +171,23 @@
     function openLightbox(type, src) {
       const lb = document.getElementById('lightbox');
       const content = lb.querySelector('.lightbox-content');
-      content.innerHTML = type === 'video' ? `<video src="${src}" controls autoplay loop></video>` : `<img src="${src}">`;
+      content.innerHTML = type === 'video' ? `<video src="${src}" controls autoplay playsinline style="width:100%;height:100%;object-fit:contain;"></video>` : `<img src="${src}">`;
       lb.classList.add('active');
+      
+      if (type === 'video') {
+        const bgm = document.getElementById('bg-music');
+        if (bgm) bgm.pause();
+      }
     }
 
     document.getElementById('btn-close-lb').addEventListener('click', () => {
-      document.getElementById('lightbox').classList.remove('active');
+      const lb = document.getElementById('lightbox');
+      lb.classList.remove('active');
+      const content = lb.querySelector('.lightbox-content');
+      content.innerHTML = '';
+      
+      const bgm = document.getElementById('bg-music');
+      if (bgm && bgm.paused) bgm.play().catch(()=>{});
     });
 
     /* ── Typewriter (Simplified & Robust) ───────────────────── */

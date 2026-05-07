@@ -12,6 +12,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 </head>
 <body>
+  
+  <audio id="bg-music" src="https://upload.wikimedia.org/wikipedia/commons/e/e0/Happy_birthday.ogg" loop preload="auto"></audio>
 
   <!-- ═══════════════════════════════════════════════════════════
        CANVAS BACKGROUNDS
@@ -183,10 +185,10 @@
        LIGHTBOX
   ════════════════════════════════════════════════════════════════ -->
   <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Media viewer">
-    <div id="lightbox-inner" class="lightbox-inner">
+    <div id="lightbox-inner" class="lightbox-content">
       <!-- media injected by JS -->
     </div>
-    <button id="lightbox-close" class="lightbox-close" aria-label="Close lightbox">
+    <button id="btn-close-lb" class="btn-close" aria-label="Close lightbox">
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
         <line x1="1" y1="1" x2="13" y2="13"/><line x1="13" y1="1" x2="1" y2="13"/>
       </svg>
