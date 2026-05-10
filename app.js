@@ -39,7 +39,10 @@
       const normalized = normalize(input);
       if (normalized.includes("may11") || normalized === "0511" || normalized === "1105") {
         const bgm = document.getElementById('bg-music');
-        if (bgm) bgm.play().catch(e => console.log('Audio autoplay blocked', e));
+        if (bgm) {
+          console.log("Attempting to play background music:", bgm.src);
+          bgm.play().catch(e => console.error('Background music playback failed:', e));
+        }
         transitionToLoader();
       } else {
         refs.errorMsg.textContent = "That doesn't seem to be the right date... try again? ❤️";
@@ -91,11 +94,15 @@
       const favPicEl = document.getElementById('fav-pic-stage');
       const imgEl = favPicEl.querySelector('.fav-pic-img');
       const textEl = favPicEl.querySelector('.fav-pic-text');
+      
+      favPicEl.style.display = 'flex'; // Ensure it's visible
 
       function displayImage(src, text, duration, onComplete) {
+        console.log(`Attempting to display: ${src}`);
         const tempImg = new Image();
         tempImg.src = src;
-        tempImg.onload = () => {
+        
+        const proceed = () => {
           imgEl.src = src;
           textEl.textContent = text;
           favPicEl.classList.remove('exit');
@@ -103,10 +110,17 @@
           setTimeout(() => {
             favPicEl.classList.remove('active');
             favPicEl.classList.add('exit');
-            setTimeout(onComplete, 800);
+            setTimeout(onComplete, 1000);
           }, duration);
         };
-        tempImg.onerror = onComplete;
+
+        tempImg.onload = proceed;
+        tempImg.onerror = () => {
+          console.error(`Failed to load image: ${src}. Skipping to next step.`);
+          // If childhood pic fails, we still want to show the text or just skip
+          // For now, let's just skip to onComplete so the site doesn't hang
+          onComplete();
+        };
       }
 
       // Step 1: Childhood
@@ -120,6 +134,7 @@
     }
 
     function showMain() {
+      console.log("Entering main experience...");
       refs.main.classList.add('active');
       renderStory();
       buildGallery();
