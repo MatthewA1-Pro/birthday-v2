@@ -9,7 +9,7 @@ const CONTENT = {
   birthday: "may 11",
 
   favPic: "assets/images/favorite.jpg.jpeg",
-  childhoodPic: "assets/images/childhood.jpg", // Make sure to save the screenshot here!
+  childhoodPic: "assets/images/childhood.jpg.jpeg", // Matches the filename you saved!
   childhoodCaption: "see how much you’ve grown proud of you mama 🥹🥹",
   bgMusic: "assets/bg-music/WhatsApp Video 2026-05-10 at 00.38.50.mp4", 
 
