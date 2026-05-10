@@ -9,6 +9,9 @@ const CONTENT = {
   birthday: "may 11",
 
   favPic: "assets/images/favorite.jpg.jpeg",
+  childhoodPic: "assets/images/childhood.jpg", // Save the screenshot here
+  childhoodCaption: "see how much you’ve grown proud of you mama 🥹🥹",
+  bgMusic: "assets/bg-music/music.mp4", // Put your video file in assets/bg-music/ and name it music.mp4
 
   // ── HERO TYPEWRITER (SHORT & SWEET) ────────────────────────
   // This is the ONLY thing she sees at first.

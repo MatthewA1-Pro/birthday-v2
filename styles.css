@@ -166,12 +166,16 @@ canvas {
 .loader-bar { width: 0%; height: 100%; background: var(--blue-neon); box-shadow: 0 0 10px var(--blue-neon); }
 
 /* ── 2.5 Favorite Pic Stage ──────────────────────────────── */
-#fav-pic-stage { background: #000; z-index: 30; }
+#fav-pic-stage { 
+  background: #000; 
+  z-index: 30; 
+  transition: opacity 1.5s ease-in-out, transform 1.5s ease-in-out;
+}
 
 .fav-pic-container {
   text-align: center;
-  max-width: min(450px, 85vw);
-  animation: fadeInScale 1.5s var(--ease-out-expo) both;
+  max-width: min(500px, 90vw);
+  transition: transform 1.5s ease-in-out;
 }
 
 .fav-pic-img {

@@ -27,16 +27,10 @@
     refs.gate.classList.add('active');
 
     const bgm = document.getElementById('bg-music');
-    if (bgm) bgm.volume = 0.4; // not too loud
-
-    // Attempt to play on first interaction (in case autoplay is blocked)
-    const playBgm = () => {
-      if (bgm && bgm.paused) bgm.play().catch(()=>{});
-      document.removeEventListener('click', playBgm);
-      document.removeEventListener('touchstart', playBgm);
-    };
-    document.addEventListener('click', playBgm);
-    document.addEventListener('touchstart', playBgm);
+    if (bgm && typeof CONTENT !== 'undefined') {
+      bgm.src = CONTENT.bgMusic;
+      bgm.volume = 0.4; // not too loud
+    }
 
     function normalize(str) { return str.toLowerCase().replace(/[\s\-_.,!?'"]/g, '').trim(); }
     
@@ -96,21 +90,33 @@
     function showFavPicStage() {
       const favPicEl = document.getElementById('fav-pic-stage');
       const imgEl = favPicEl.querySelector('.fav-pic-img');
-      const tempImg = new Image();
-      tempImg.src = CONTENT.favPic;
-      tempImg.onload = () => {
-        imgEl.src = CONTENT.favPic;
-        favPicEl.classList.add('active');
-        setTimeout(() => {
-          favPicEl.classList.remove('active');
-          favPicEl.classList.add('exit');
+      const textEl = favPicEl.querySelector('.fav-pic-text');
+
+      function displayImage(src, text, duration, onComplete) {
+        const tempImg = new Image();
+        tempImg.src = src;
+        tempImg.onload = () => {
+          imgEl.src = src;
+          textEl.textContent = text;
+          favPicEl.classList.remove('exit');
+          favPicEl.classList.add('active');
           setTimeout(() => {
-            favPicEl.style.display = 'none';
-            showMain();
-          }, 800);
-        }, 5000);
-      };
-      tempImg.onerror = () => showMain();
+            favPicEl.classList.remove('active');
+            favPicEl.classList.add('exit');
+            setTimeout(onComplete, 800);
+          }, duration);
+        };
+        tempImg.onerror = onComplete;
+      }
+
+      // Step 1: Childhood
+      displayImage(CONTENT.childhoodPic, CONTENT.childhoodCaption, 5000, () => {
+        // Step 2: Favorite Pic
+        displayImage(CONTENT.favPic, "This is my favorite picture of you. ❤️", 5000, () => {
+          favPicEl.style.display = 'none';
+          showMain();
+        });
+      });
     }
 
     function showMain() {
