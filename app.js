@@ -45,7 +45,7 @@
         }
         transitionToLoader();
       } else {
-        refs.errorMsg.textContent = "That doesn't seem to be the right date... try again? ❤️";
+        refs.errorMsg.textContent = "Please check the date and try again! ❤️";
         refs.errorMsg.classList.add('visible');
         refs.gateCard.classList.add('shake');
         setTimeout(() => refs.gateCard.classList.remove('shake'), 400);
